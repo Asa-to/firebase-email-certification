@@ -8,3 +8,4 @@ gcp で email 認証を行うテスト
    2. firebase の初期化処理を App.tsx に追加
       1. firebaseConfig の設定
 3. firebase プロジェクトで authentication からメール認証(パスワードあり) を有効にする
+4. ガーっと実装する
