@@ -37,10 +37,7 @@ function App() {
     >
       {user ? (
         <div>
-          <p>
-            ようこそ{user.displayName ?? user.email ?? user.uid}
-            さん
-          </p>
+          <p>ようこそ{user.displayName ?? user.email ?? user.uid}さん</p>
           <button
             onClick={async () => {
               await signOut();
