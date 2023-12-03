@@ -52,13 +52,22 @@ function App() {
     [auth]
   );
 
+  // ログイン済み時はonAuthStateChange初回実行時にユーザー情報が読み込まれる
+  const [isInitialized, setIsInitialized] = useState(false);
   useEffect(() => {
+    // @see https://firebase.google.com/docs/auth/web/manage-users?hl=ja
     return onAuthStateChanged(auth, (user) => {
+      if (!isInitialized) {
+        setIsInitialized(true);
+      }
       if (user) {
         setUserInfo(user);
       }
     });
-  }, [auth]);
+  }, [auth, isInitialized]);
+  if (!isInitialized) {
+    return <>loading</>;
+  }
 
   return (
     <div
