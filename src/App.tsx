@@ -36,10 +36,16 @@ function App() {
         }
       } catch (error) {
         const firebaseError = error as FirebaseError;
-        if (firebaseError.code === "auth/email-already-in-use") {
-          alert("使用されたemailは登録済みです");
-        } else {
-          alert(firebaseError.message);
+        // @see https://firebase.google.com/docs/auth/admin/errors?hl=ja
+        switch (firebaseError.code) {
+          case "auth/email-already-in-use":
+            alert("使用されたemailは登録済みです");
+            break;
+          case "auth/invalid-credential":
+            alert("emailまたはpasswordが無効です");
+            break;
+          default:
+            alert(firebaseError.code);
         }
       }
     },
@@ -47,16 +53,12 @@ function App() {
   );
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    return onAuthStateChanged(auth, (user) => {
       if (user) {
         setUserInfo(user);
       }
     });
   }, [auth]);
-
-  useEffect(() => {
-    setUserInfo(auth.currentUser);
-  }, [auth.currentUser]);
 
   return (
     <div
